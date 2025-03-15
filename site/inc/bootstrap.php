@@ -13,3 +13,16 @@ spl_autoload_register(function (string $class) {
        require_once $filename;
    }
 });
+
+$dbmode = 'mock';
+switch ($dbmode) {
+
+    case 'pdo':
+        $class = 'mysqlpdo';
+        break;
+    default:
+        $class = 'mock';
+        break;
+}
+
+require_once (__DIR__ . '/../lib/Data/DataManager_' . $class . '.php');

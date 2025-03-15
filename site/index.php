@@ -1,6 +1,7 @@
 <?php
 
 use Bookshop\Book;
+use Bookshop\Category;
 
 require_once ('inc/bootstrap.php');
 
@@ -12,8 +13,5 @@ if (isset($_REQUEST['view'])
 
     $view = $_REQUEST['view'];
 }
-
-$book = new Book(1,2,"test", "test", 12.3);
-var_dump($book);
 
 require_once ('views/' . $view . '.php');

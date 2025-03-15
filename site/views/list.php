@@ -6,7 +6,7 @@ use Data\DataManager;
 
 $categories = DataManager::getCategories();
 $categoryId = isset($_REQUEST['categoryId']) ? (int) $_REQUEST['categoryId'] : 0;
-$books = $categoryId > 0 ? DataManager::getBooksByCategory($categoryId) : null;
+$books = $categoryId > 0 ? DataManager::getBooksByCategory($categoryId) : array();
 
 
 require_once "views/partials/header.php";
@@ -32,10 +32,14 @@ require_once "views/partials/header.php";
 </ul>
 
 
+<?php
+if (sizeof($books) > 0) {
+    require_once "views/partials/booklist.php";
+} else { ?>
+    <div class="alert alert-info">No books available</div>
+<?php } ?>
 
 
 <?php
-var_dump($books);
-
 require_once "views/partials/footer.php";
 ?>

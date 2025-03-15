@@ -1,8 +1,10 @@
 <?php
 declare(strict_types=1);
 
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+
 
 // define default view
 $default_view = 'welcome';
@@ -13,6 +15,9 @@ spl_autoload_register(function (string $class) {
        require_once $filename;
    }
 });
+
+Bookshop\SessionContext::create();
+
 
 $dbmode = 'mock';
 switch ($dbmode) {

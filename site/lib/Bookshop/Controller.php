@@ -17,6 +17,10 @@ class Controller
     public const string ACTION_LOGIN = 'login';
     public const string ACTION_LOGOUT = 'logout';
 
+    public const string CC_NAME = 'nameOnCard';
+    public const string CC_NUMBER = 'cardNumber';
+    public const string ACTION_ORDER = 'placeOrder';
+
     private static $instance;
 
     public static function getInstance() : Controller {
@@ -67,11 +71,69 @@ class Controller
               Util::redirect();
               break;
 
+
+          case self::ACTION_ORDER :
+              $user = AuthenticationManager::getAuthenticatedUser();
+
+              if ($user == null) {
+                  $this->forwardRequest(['Not logged in.']);
+                  break;
+              }
+
+              if (!$this->processCheckout($_POST[self::CC_NAME], $_POST[self::CC_NUMBER])) {
+                  $this->forwardRequest(['Checkout failed.']);
+              }
+              break;
+
+
           default:
               throw new \Exception('Invalid request action');
               break;
       }
 
+    }
+
+
+    /**
+     *
+     * @param string $nameOnCard
+     * @param integer $cardNumber
+     * @return bool
+     */
+    protected function processCheckout(string $nameOnCard = null, string $cardNumber = null) : bool {
+
+        $errors = [];
+        $nameOnCard = trim($nameOnCard);
+        if ($nameOnCard == null || strlen($nameOnCard) == 0) {
+            $errors[] = 'Invalid name on card.';
+        }
+        if ($cardNumber == null || strlen($cardNumber) != 16 || !ctype_digit($cardNumber)) {
+            $errors[] = 'Invalid card number. Card number must be sixteen digits.';
+        }
+
+        if (sizeof($errors) > 0) {
+            $this->forwardRequest($errors);
+            return false;
+        }
+
+        //check cart
+        if (ShoppingCart::size() == 0) {
+            $this->forwardRequest(['Shopping cart is empty.']);
+            return false;
+        }
+
+        //try to place a new order
+        $user = AuthenticationManager::getAuthenticatedUser();
+        $orderId = \Data\DataManager::createOrder($user->getId(), ShoppingCart::getAll(), $nameOnCard, $cardNumber);
+        if (!$orderId) {
+            $this->forwardRequest(['Could not create order.']);
+            return false;
+        }
+        //clear shopping card and redirect to success page
+        ShoppingCart::clear();
+        Util::redirect('index.php?view=success&orderId=' . rawurlencode($orderId));
+
+        return true;
     }
 
 

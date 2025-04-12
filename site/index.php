@@ -9,7 +9,10 @@ $view = $default_view;
 
 
 
-
+$postAction = $_REQUEST[Bookshop\Controller::ACTION] ?? null;
+if ($postAction != null) {
+    Bookshop\Controller::getInstance()->invokePostAction();
+}
 
 if (isset($_REQUEST['view'])
     && !empty($_REQUEST['view'])

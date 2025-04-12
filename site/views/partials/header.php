@@ -1,3 +1,10 @@
+<?php
+use Bookshop\Util;
+use Bookshop\ShoppingCart;
+
+$cartSize = ShoppingCart::size();
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,7 +45,7 @@
                 <ul class="nav navbar-nav navbar-right login">
                     <li  class="nav-item">
                         <a href="index.php?view=checkout" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Zum Checkout">
-                            <span class="badge bg-secondary"><?php // echo Util::escape($cartSize); ?></span>
+                            <span class="badge bg-secondary"><?php echo Util::escape($cartSize); ?></span>
                             <span class="bi bi-cart4" aria-hidden="true"></span>
                         </a>
                     </li>

@@ -3,6 +3,8 @@ use Bookshop\Util;
 use Bookshop\ShoppingCart;
 
 $cartSize = ShoppingCart::size();
+$user = \Bookshop\AuthenticationManager::getAuthenticatedUser();
+$errors = $_SESSION['errors'] ?? null;
 ?>
 
 <!DOCTYPE html>
@@ -50,7 +52,7 @@ $cartSize = ShoppingCart::size();
                         </a>
                     </li>
                     <li class="nav-item dropdown">
-                        <?php /* if ($user == null): ?>
+                        <?php  if ($user == null): ?>
                             <a href="#" class="nav-link dropdown-toggle"  data-bs-toggle="dropdown" role="button" aria-expanded="false">
                                 Not logged in!
                                 <b class="caret"></b>
@@ -72,7 +74,7 @@ $cartSize = ShoppingCart::size();
                                     </form>
                                 </li>
                             </ul>
-                        <?php endif; */ ?>
+                        <?php endif; ?>
                     </li>
                 </ul> <!-- /. login -->
             </div><!--/.nav-collapse -->

@@ -1,3 +1,17 @@
+<?php
+use Bookshop\Util;
+
+if (isset($errors) && is_array($errors)) { ?>
+<div class="errors alert alert-danger mt-4">
+    <ul>
+        <?php foreach ($errors as $error) { ?>
+            <li><?php echo Util::escape($error); ?></li>
+        <?php } ?>
+    </ul>
+</div>
+<?php } ?>
+
+
 <div class="footer">
 
     <!--display cart info-->

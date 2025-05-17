@@ -1,14 +1,27 @@
 <?php
+
 namespace Bookshop;
 
-class SessionContext {
+/**
+ * SessionContext - check in ../bootstrap.php
+ * @package    
+ * @subpackage 
+ * @author     John Doe <jd@fbi.gov>
+ */
+class SessionContext  {
 
-    private static bool $exists = false;
+  private static $exists = false;
 
-    public static function create() : bool {
-        if (!self::$exists) {
-            self::$exists = session_start();
-        }
-        return self::$exists;
+  /**
+   * checkt ob eine session angelegt ist, wenn nicht, macht es das
+   *
+   * @return boolean
+   */
+  public static function create() : bool {
+    if (!self::$exists) {
+      self::$exists = session_start();
     }
+    return self::$exists;
+  }
+
 }

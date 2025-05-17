@@ -1,33 +1,37 @@
+<!--display error messages-->
+
 <?php
+
 use Bookshop\Util;
 
-if (isset($errors) && is_array($errors)) { ?>
-<div class="errors alert alert-danger mt-4">
+if (isset($errors) && is_array($errors)) : ?>
+  <div class="errors alert alert-danger mt-4">
     <ul>
-        <?php foreach ($errors as $error) { ?>
-            <li><?php echo Util::escape($error); ?></li>
-        <?php } ?>
+      <?php foreach ($errors as $errMsg) : ?>
+        <li><?php echo (Util::escape($errMsg)); ?></li>
+      <?php endforeach; ?>
     </ul>
-</div>
-<?php } ?>
+  </div>
+<?php endif; ?>
 
+<!--/display error messages-->
 
 <div class="footer">
 
-    <!--display cart info-->
-    <hr />
-    <div class="row">
-        <div class="col-md-4">
-            <a href="index.php?view=checkout" class="footer-link"  data-bs-toggle="tooltip" data-bs-placement="top" title="Zum Checkout">
-                <span class="badge bg-secondary"><?php echo Bookshop\Util::escape($cartSize); ?></span> <span class="bi bi-cart4" aria-hidden="true"></span>
-            </a>
-        </div>
-        <div class="col-md-4 ms-auto text-end">
-            <p><?php echo Bookshop\Util::escape(date('d.m.Y H:i', time())); ?></p>
-        </div>
+  <!--display cart info-->
+  <hr />
+  <div class="row">
+    <div class="col-md-4">
+    <a href="index.php?view=checkout" class="footer-link"  data-bs-toggle="tooltip" data-bs-placement="top" title="Zum Checkout">
+        <span class="badge bg-secondary"><?php echo Bookshop\Util::escape($cartSize); ?></span> <span class="bi bi-cart4" aria-hidden="true"></span>
+      </a>
     </div>
+    <div class="col-md-4 ms-auto text-end">
+      <p><?php echo Bookshop\Util::escape(date('d.m.Y H:i', time())); ?></p>
+    </div>
+  </div>
 
-    <!--/display cart info-->
+  <!--/display cart info-->
 
 </div>
 

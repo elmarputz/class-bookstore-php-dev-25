@@ -19,7 +19,7 @@ spl_autoload_register(function (string $class) {
 Bookshop\SessionContext::create();
 
 
-$dbmode = 'mock';
+$dbmode = 'pdo';
 switch ($dbmode) {
 
     case 'pdo':
